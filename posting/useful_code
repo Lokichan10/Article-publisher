@@ -1,0 +1,55 @@
+<?php
+// Подключение к базе данных
+$servername = "localhost";
+$username = "root"; // ваше имя пользователя БД
+$password = ""; // ваш пароль БД
+$dbname = "articles_db"; // имя вашей базы данных
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Ошибка подключения: " . $conn->connect_error);
+}
+$sql = "SELECT COUNT(*) AS total_rows FROM articles";
+$result = $conn->query($sql);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $total_rows = $row["total_rows"];
+
+    echo "В таблице 'articles' есть " . $total_rows . " строк(и) данных.";
+} else {
+    echo "Ошибка запроса: " . $conn->error;
+}
+
+$conn->close();
+
+
+
+
+
+
+
+////////////////////////////////////////////////
+
+
+
+
+
+
+
+<form action="article.php" method="POST" class="article-form" style="display: inline;">
+            <input type="hidden" name="id" value="$id">
+            <a href="#" onclick="this.closest('form').submit()" style="text-decoration: none; color: black;">
+                <div class="card" style="width: 17rem; margin-bottom: 1rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">$title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">$publish_date</h6>
+                        <p class="card-text">$content_preview</p>
+                        <a class="card-link">Read more</a>
+                        <a class="card-link">Repost</a>
+                    </div>
+                </div>
+            </a>
+        </form>
+
+код делает так что при нажатии на карточку при помощи form передается инфа на другой файл,
+из за чего мы можем принять его и при помощи айдишки обратиться и вывести инфу на экран
